@@ -1,0 +1,74 @@
+/**
+ * .fluid-font
+ * Adjust a font-size between 2+ window widths.
+ *
+ * This LESS mixin accepts a variable number of parameters (at least 4)
+ * Use the same type of units for all the parameters (px/em/rem)
+ * @license: MIT
+ * @dev: morgunkorn
+ */
+
+/*
+	.example-px {
+		.fluid-font(18px, 24px, 320px, 960px);
+	}
+
+	< 320px: font-size: fixed 18px
+	>= 320px < 960px: font-size: variable 18px -> 24px;
+	>= 960px: font-size: fixed 24px
+*/
+
+/*
+	.example-em {
+		.fluid-font(1em, 1.5em, 20em, 40em, 80em);
+	}
+
+	< 20em: font-size: fixed 1em
+	>= 20em < 40em: font-size: variable 1em -> 1.5em;
+	>= 40em < 80em: font-size: variable 1em -> 1.5em;
+	>= 80em: font-size: fixed 1.5em;
+*/
+
+.fluid-font(@fsmin; @fsmax; @w...) {
+	@fsunit: get-unit(@fsmin);
+	@fsdelta: unit(@fsmax - @fsmin);
+
+	.fluid-font-step(@step: 1) when (@step < length(@w)){
+		@stepnext: (@step + 1);
+		@wfrom: (extract(@w, @step));
+		@wto: (extract(@w, @step + 1));
+		.setwtoq(){
+			@wtomq: (@wto - 0.001);
+		}
+		.setwtoq() when (get-unit(@wto) = px){
+			@wtomq: (@wto - 1);
+		}
+		.setwtoq();
+
+		@wdelta: (unit(@wto - @wfrom));
+		@fsstatic: (round(unit(((@wdelta * @fsmin) - (@fsdelta * @wfrom)) / @wdelta, @fsunit), 3));
+		@fsvw: (round(100vw * @fsdelta / @wdelta, 3));
+
+		& when (@step = 1){
+			font-size: @fsmin;
+		}
+		& when (unit(@fsstatic) = 0){
+			@media (min-width: @wfrom) and (max-width: @wtomq){
+				font-size: @fsvw;
+			}
+		}
+		& when not(unit(@fsstatic) = 0) {
+			@media (min-width: @wfrom) and (max-width: @wtomq){
+				font-size: ~'calc(@{fsstatic} + @{fsvw})';
+			}
+		}
+		& when (length(@w) = @stepnext) {
+			@media (min-width: @wto) {
+				font-size: @fsmax;
+			}
+		}
+		.fluid-font-step(@stepnext);
+	}
+
+	.fluid-font-step();
+}

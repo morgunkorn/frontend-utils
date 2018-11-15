@@ -1,0 +1,29 @@
+/**
+ * .scrim-gradient
+ * A simple little LESS mixin for creating scrim gradients
+ * Inspired by Andreas Larson - https://github.com/larsenwork
+ * https://css-tricks.com/easing-linear-gradients/
+ * @license: MIT
+ * @Rewritten in LESS 1.5 by morgunkorn
+*/
+
+.scrim-gradient( @scrimDirection: to bottom, @scrimColor: fade(black,50%) ) {
+	@scrimPositions: 1, 19,    34,    47,    56.5,  65,    73,    80.2,  86.1,  91,    95.2,  98.2;
+	@scrimAlphas:    1, 0.738, 0.541, 0.382, 0.278, 0.194, 0.126, 0.075, 0.042, 0.021, 0.008, 0.002;
+
+	@scrimHue: hue(@scrimColor);
+	@scrimSaturation: saturation(@scrimColor);
+	@scrimLightness: lightness(@scrimColor);
+	@scrimAlpha: alpha(@scrimColor);
+
+	background+: ~"linear-gradient(" @scrimDirection;
+	.scrim-loop(length(@scrimPositions));
+	.scrim-loop(@scrimIndex) when (@scrimIndex > 0) {
+		.scrim-loop((@scrimIndex - 1));
+		@scrimStopAlpha: extract(@scrimAlphas, @scrimIndex);
+		@scrimStopPosition: extract(@scrimPositions, @scrimIndex);
+		@scrimStopColor: hsla(@scrimHue, @scrimSaturation, @scrimLightness, @scrimAlpha * @scrimStopAlpha);
+		background+: @scrimStopColor percentage(@scrimStopPosition / 100);
+	}
+	background+: hsla(@scrimHue, @scrimSaturation, @scrimLightness, 0) ~' 100% )';
+}
