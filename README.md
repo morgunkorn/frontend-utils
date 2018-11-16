@@ -130,7 +130,8 @@ Source: [scrim-gradient.less](css/scrim-gradient.less)
 /* Output */
 .selector{
   background: linear-gradient( 
-    to left, rgba(255, 0, 0, 0.5) 1%, 
+    to left, 
+    rgba(255, 0, 0, 0.5) 1%, 
     rgba(255, 0, 0, 0.369) 19%, 
     rgba(255, 0, 0, 0.2705) 34%, 
     rgba(255, 0, 0, 0.191) 47%, 
