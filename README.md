@@ -86,11 +86,15 @@ The standard css `linear-gradient()` function generates a gradient with hard edg
 
 This LESS mixin creates a CSS Gradient from any color (also partially transparent) to full transparency that looks more natural, similar to what you obtain in Photoshop, for example.
 
+![Gradient comparison](github/scrim-gradient.png)
+
+Check this on [CodePen](https://codepen.io/morgunkorn/pen/YRQLEz)
+
 Source: [scrim-gradient.less](css/scrim-gradient.less)
 
 #### .scrim-gradient examples
 
-**Example A:** call with standard values, from top to bottom, black 70% opacity to 0% opacity.
+**Example A:** call with standard values, from top to bottom, black 50% opacity to transparent.
 
 ```less
 /* Input */
@@ -119,31 +123,31 @@ Source: [scrim-gradient.less](css/scrim-gradient.less)
 }
 ```
 
-**Example B:** sideways gradient from half transparent red to transparent.
+**Example B:** sideways gradient from red 70% opacity to transparent.
 
 ```less
 /* Input */
 .selector{
-  .scrim-gradient( to left, fade(red, 50%) );
+  .scrim-gradient(to left, fade(red, 70%));
 }
 
 /* Output */
 .selector{
   background: linear-gradient( 
     to left, 
-    rgba(255, 0, 0, 0.5) 1%, 
-    rgba(255, 0, 0, 0.369) 19%, 
-    rgba(255, 0, 0, 0.2705) 34%, 
-    rgba(255, 0, 0, 0.191) 47%, 
-    rgba(255, 0, 0, 0.139) 56.5%, 
-    rgba(255, 0, 0, 0.097) 65%, 
-    rgba(255, 0, 0, 0.063) 73%, 
-    rgba(255, 0, 0, 0.0375) 80.2%, 
-    rgba(255, 0, 0, 0.021) 86.1%, 
-    rgba(255, 0, 0, 0.0105) 91%, 
-    rgba(255, 0, 0, 0.004) 95.2%, 
-    rgba(255, 0, 0, 0.001) 98.2%, 
-    rgba(255, 0, 0, 0)  100% 
+    rgba(255, 0, 0, 0.7) 1%, 
+    rgba(255, 0, 0, 0.5166) 19%, 
+    rgba(255, 0, 0, 0.3787) 34%, 
+    rgba(255, 0, 0, 0.2674) 47%, 
+    rgba(255, 0, 0, 0.1946) 56.5%, 
+    rgba(255, 0, 0, 0.1358) 65%, 
+    rgba(255, 0, 0, 0.0882) 73%, 
+    rgba(255, 0, 0, 0.0525) 80.2%, 
+    rgba(255, 0, 0, 0.0294) 86.1%, 
+    rgba(255, 0, 0, 0.0147) 91%, 
+    rgba(255, 0, 0, 0.0056) 95.2%, 
+    rgba(255, 0, 0, 0.0014) 98.2%, 
+    rgba(255, 0, 0, 0)  100%
   );
 }
 ```
